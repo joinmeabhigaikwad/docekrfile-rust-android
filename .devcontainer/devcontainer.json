@@ -1,0 +1,12 @@
+{
+    "name": "Android Development Container",
+    "image": "gaikwadabhi1999/new-rust-android",  // Update image name and tag
+    "workspaceFolder": "/workspace",
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [],
+    "forwardPorts": [],
+    "postCreateCommand": "mkdir -p /workspace && ln -s /workspace /app"
+  }
+  

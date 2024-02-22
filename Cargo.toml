@@ -1,0 +1,11 @@
+[package]
+name = "my-rust-project"
+version = "0.1.0"
+edition = "2018"
+
+# Add dependencies here if needed
+# For example:
+# [dependencies]
+# tokio = { version = "1", features = ["full"] }
+
+[dependencies]
