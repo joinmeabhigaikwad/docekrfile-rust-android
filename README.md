@@ -1,6 +1,6 @@
 **RUN COMMAND**  
 
-docker run -it <your image name>
+docker run -it (your image name)
 
 **DOCKERFILE VERIFICATION INSTRUCTIONS**
 
