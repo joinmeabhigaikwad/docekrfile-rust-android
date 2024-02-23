@@ -3,7 +3,7 @@
     "image": "gaikwadabhi1999/new-rust-android",  // Update image name and tag
     "workspaceFolder": "/workspace",
     "settings": {
-      "terminal.integrated.shell.linux": "/bin/bash"
+      "terminal.integrated.shell.linux": "/bash"
     },
     "extensions": [],
     "forwardPorts": [],
