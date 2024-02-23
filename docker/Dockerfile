@@ -1,14 +1,32 @@
-FROM alpine:3.18
+# Use Alpine Linux as the base image
+FROM alpine:latest
 
-# Install necessary dependencies
+# Set environment variables for Android SDK
+ENV ANDROID_SDK_ROOT /opt/android-sdk
+ENV PATH ${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools
+
+# Install dependencies
 RUN apk add --no-cache \
-        ca-certificates \
-        gcc \
-        wget \
-        openssl \
-        bash \
-        libc6-compat \
-        openjdk8-jre
+    ca-certificates \
+    gcc \
+    wget \
+    openssl \
+    bash \
+    libc6-compat \
+    openjdk8-jre
+
+# Download and install Android SDK
+RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O /tmp/sdk-tools.zip && \
+    unzip -q /tmp/sdk-tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest && \
+    rm /tmp/sdk-tools.zip
+
+# Accept SDK licenses
+RUN yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --licenses
+
+# Install required Android SDK components
+RUN ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
 # Set environment variables for Rust
 ENV RUSTUP_HOME=/usr/local/rustup \
@@ -36,25 +54,8 @@ RUN set -eux; \
     rustc --version; \
     apk del wget
 
-# Set environment variables for Android
-ENV ANDROID_HOME /usr/local/android-sdk-linux
-ENV PATH $PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+# Set working directory
+WORKDIR /workspace
 
-# Download and extract Android SDK
-RUN cd /usr/local && \
-    wget -q https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
-    tar -xzf android-sdk_r24.4.1-linux.tgz && \
-    rm android-sdk_r24.4.1-linux.tgz
-
-# Update Android SDK
-RUN echo y | ${ANDROID_HOME}/tools/android update sdk --no-ui --all --filter platform-tools,android-18,build-tools-23.0.3
-
-# Download and extract Android NDK
-RUN cd /usr/local && \
-    wget -q http://dl.google.com/android/repository/android-ndk-r12b-linux-x86_64.zip && \
-    unzip -q android-ndk-r12b-linux-x86_64.zip && \
-    rm android-ndk-r12b-linux-x86_64.zip
-
-ENV NDK_HOME /usr/local/android-ndk-r12b
-
-CMD ["/bin/bash"]
+# Default command when the container starts
+CMD ["bash"]
