@@ -1,4 +1,10 @@
-**Dockerfile Verification Instructions**
+**RUN COMMAND**  
+
+docker run -it <your image name>
+
+**DOCKERFILE VERIFICATION INSTRUCTIONS**
+
+**After completing the build, use these commands to check if Rust and Android have been installed successfully:**
 
 **1. Alpine Linux Version Check**
 
