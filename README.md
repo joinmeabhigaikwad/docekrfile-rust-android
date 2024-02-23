@@ -6,24 +6,23 @@ docker run -it (your image name)
 
 **After completing the build, use these commands to check if Rust and Android have been installed successfully:**
 
-**1. Alpine Linux Version Check**
-
-  cat /etc/*release | grep PRETTY_NAME
-
-**2. Android SDK Installation Check**
-
-  cmdline-tools/latest/bin/sdkmanager --version
-
-**3. Rust Installation Check**
-
+**Rust Version: Run the following commands to verify the Rust version and related components:**
 rustup --version
 cargo --version
 rustc --version
 
-**4. Android Build Tools Listing**
+**Android SDK Manager: Execute the following command to check the Android SDK Manager version:**
+sdkmanager --version
 
-cmdline-tools/latest/bin/sdkmanager --list | grep build-tools
+**Android Platform Tools: Use the following command to ensure that Android Platform Tools are installed and functioning properly:**
+adb version
 
-**5. Android Platforms Listing**
+**Android Build Tools: Check the installed Android Build Tools by running:**
+sdkmanager --list | grep build-tools
 
-cmdline-tools/latest/bin/sdkmanager --list | grep platforms
+**Android Platforms: Verify installed Android platforms with:**
+sdkmanager --list | grep platforms
+
+**SDK Components: Ensure that necessary Android SDK components are installed by executing:**
+sdkmanager --list
+
